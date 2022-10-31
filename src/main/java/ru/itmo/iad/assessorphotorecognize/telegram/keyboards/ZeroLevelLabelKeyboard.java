@@ -31,6 +31,12 @@ public class ZeroLevelLabelKeyboard {
 			rowList.add(row);
 		}
 
+		InlineKeyboardButton button = new InlineKeyboardButton();
+		button.setText("Пропустить");
+		button.setCallbackData("skip");
+		
+		rowList.add(List.of(button));
+		
 		markup.setKeyboard(rowList);
 
 		return markup;

@@ -1,4 +1,4 @@
-package ru.itmo.iad.assessorphotorecognize.telegram.commands;
+package ru.itmo.iad.assessorphotorecognize.telegram.commands.assessment;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
@@ -10,6 +10,7 @@ import ru.itmo.iad.assessorphotorecognize.domain.dao.AssessorDao;
 import ru.itmo.iad.assessorphotorecognize.domain.dto.ImageDto;
 import ru.itmo.iad.assessorphotorecognize.service.AsessorService;
 import ru.itmo.iad.assessorphotorecognize.service.ImageGetter;
+import ru.itmo.iad.assessorphotorecognize.telegram.commands.AbsCommand;
 import ru.itmo.iad.assessorphotorecognize.telegram.keyboards.ZeroLevelLabelKeyboard;
 import ru.itmo.iad.assessorphotorecognize.telegram.response.PhotoResponse;
 import ru.itmo.iad.assessorphotorecognize.telegram.response.Response;

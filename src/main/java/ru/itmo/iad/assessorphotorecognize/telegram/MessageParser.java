@@ -12,7 +12,7 @@ import org.telegram.telegrambots.meta.api.objects.User;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import ru.itmo.iad.assessorphotorecognize.telegram.commands.AbsCommand;
-import ru.itmo.iad.assessorphotorecognize.telegram.commands.NextImageCommand;
+import ru.itmo.iad.assessorphotorecognize.telegram.commands.assessment.NextImageCommand;
 import ru.itmo.iad.assessorphotorecognize.telegram.commands.exception.NotEnoughParametersExceptionCommand;
 import ru.itmo.iad.assessorphotorecognize.telegram.commands.general.HelpCommand;
 import ru.itmo.iad.assessorphotorecognize.telegram.commands.general.StartCommand;

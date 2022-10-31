@@ -41,9 +41,7 @@ public class Bot extends TelegramLongPollingBot {
 			Long chatId = message.getChatId();
 			User author = message.getFrom();
 
-			log.info("Message!");
-
-			if (message.hasPhoto() && "asd2a2213h".equals(message.getCaption())) {
+			if (message.hasPhoto()) {
 
 				String messageText = message.getCaption();
 

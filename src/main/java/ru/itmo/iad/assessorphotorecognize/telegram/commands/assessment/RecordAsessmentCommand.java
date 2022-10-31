@@ -1,4 +1,4 @@
-package ru.itmo.iad.assessorphotorecognize.telegram.commands;
+package ru.itmo.iad.assessorphotorecognize.telegram.commands.assessment;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -16,6 +16,7 @@ import ru.itmo.iad.assessorphotorecognize.domain.dto.ImageDto;
 import ru.itmo.iad.assessorphotorecognize.service.AsessmentSaver;
 import ru.itmo.iad.assessorphotorecognize.service.AsessorService;
 import ru.itmo.iad.assessorphotorecognize.service.ImageGetter;
+import ru.itmo.iad.assessorphotorecognize.telegram.commands.AbsCommand;
 import ru.itmo.iad.assessorphotorecognize.telegram.keyboards.ZeroLevelLabelKeyboard;
 import ru.itmo.iad.assessorphotorecognize.telegram.response.EditMessageCaptionResponse;
 import ru.itmo.iad.assessorphotorecognize.telegram.response.MultiResponse;

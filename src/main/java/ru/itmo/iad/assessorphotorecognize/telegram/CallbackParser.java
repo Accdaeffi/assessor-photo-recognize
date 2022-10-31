@@ -11,7 +11,8 @@ import org.telegram.telegrambots.meta.api.objects.User;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
 import ru.itmo.iad.assessorphotorecognize.telegram.commands.AbsCommand;
-import ru.itmo.iad.assessorphotorecognize.telegram.commands.RecordAsessmentCommand;
+import ru.itmo.iad.assessorphotorecognize.telegram.commands.assessment.RecordAsessmentCommand;
+import ru.itmo.iad.assessorphotorecognize.telegram.commands.assessment.SkipImageCommand;
 import ru.itmo.iad.assessorphotorecognize.telegram.commands.keyboard.ShowLabelsKeyboardCommand;
 import ru.itmo.iad.assessorphotorecognize.telegram.commands.keyboard.ShowZeroLevelLabelsKeyboardCommand;
 
@@ -48,6 +49,10 @@ public class CallbackParser implements ApplicationContextAware {
 				case "label": {
 					commandHandler = appContext.getBean(RecordAsessmentCommand.class, messageAuthor, argument, messageId);
 			
+				}
+				break;
+				case "skip": {
+					commandHandler = appContext.getBean(SkipImageCommand.class, messageId);
 				}
 				break;
 				default: {
