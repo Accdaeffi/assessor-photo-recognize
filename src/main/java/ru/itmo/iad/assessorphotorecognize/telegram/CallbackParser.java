@@ -29,7 +29,7 @@ public class CallbackParser implements ApplicationContextAware {
 	public Optional<AbsCommand> parseCallback(@NonNull String messageText, int messageId, @NonNull User messageAuthor) {
 
 		try {
-			
+
 			String arr[] = messageText.split(" ", 2);
 			String command = arr[0];
 			String argument = (arr.length > 1) ? arr[1] : null;
@@ -43,16 +43,16 @@ public class CallbackParser implements ApplicationContextAware {
 				break;
 				case "zero_level_label": {
 					commandHandler = appContext.getBean(ShowLabelsKeyboardCommand.class, argument, messageId);
-			
+
 				}
 				break;
 				case "label": {
 					commandHandler = appContext.getBean(RecordAsessmentCommand.class, messageAuthor, argument, messageId);
-			
+
 				}
 				break;
 				case "skip": {
-					commandHandler = appContext.getBean(SkipImageCommand.class, messageId);
+					commandHandler = appContext.getBean(SkipImageCommand.class, messageAuthor, messageId);
 				}
 				break;
 				default: {
