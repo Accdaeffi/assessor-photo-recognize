@@ -69,15 +69,30 @@ public class ImageGetter {
 			}
 		});
 
-		ObjectId minId = null;
 		int minimumCount = 1000;
+		int imagesWithMinimum = 0;
 
 		for (Entry<ObjectId, Integer> entry : imagesAsessmentCount.entrySet()) {
 			if (entry.getValue() < minimumCount) {
-				minId = entry.getKey();
 				minimumCount = entry.getValue();
+				imagesWithMinimum = 0;
+			} else if (entry.getValue() == minimumCount) {
+				imagesWithMinimum++;
 			}
-
+		}
+		
+		Random random = new Random();
+		int selectedImage = random.nextInt(imagesWithMinimum);
+		ObjectId minId = null;
+				
+		for (Entry<ObjectId, Integer> entry : imagesAsessmentCount.entrySet()) {
+			if (entry.getValue() == minimumCount) {
+				if (selectedImage == 0) {
+					minId = entry.getKey();
+				} else {
+					selectedImage--;
+				}
+			}
 		}
 
 		TrainingImageDao dao = trainingImageRepository.findById(minId).get();
