@@ -1,7 +1,6 @@
 package ru.itmo.iad.assessorphotorecognize.service;
 
 import java.io.IOException;
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -89,17 +88,13 @@ public class ImageGetter {
 	private ImageDto getRandom() throws IllegalStateException, IOException {
 		List<TrainingImageDao> images = trainingImageRepository.findByDataset(Dataset.test);
 
-		Collections.shuffle(images);
-
-		return convertDaoToDto(images.get(0));
+		return convertDaoToDto(images.get(new Random().nextInt(images.size())));
 	}
 	
 	private ImageDto getHoneypot() throws IllegalStateException, IOException {
 		List<TrainingImageDao> images = trainingImageRepository.findByDataset(Dataset.train);
 
-		Collections.shuffle(images);
-
-		return convertDaoToDto(images.get(0));
+		return convertDaoToDto(images.get(new Random().nextInt(images.size())));
 	}
 	
 
