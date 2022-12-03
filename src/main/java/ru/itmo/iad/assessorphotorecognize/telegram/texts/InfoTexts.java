@@ -7,7 +7,7 @@ import ru.itmo.iad.assessorphotorecognize.domain.Label;
 
 public class InfoTexts {
 
-	public static Map<Label, String> infoTexts = new HashMap<Label, String>();
+	public static Map<Label, String> infoTexts = new HashMap<>();
 
 	static {
 		infoTexts.put(Label.SHOPPING,

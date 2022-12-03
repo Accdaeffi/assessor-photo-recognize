@@ -1,4 +1,4 @@
-package ru.itmo.iad.photorecognize.service;
+package ru.itmo.iad.assessorphotorecognize.service;
 
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

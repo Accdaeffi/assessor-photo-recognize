@@ -14,7 +14,7 @@ import ru.itmo.iad.assessorphotorecognize.telegram.texts.InfoTexts;
 @Scope("prototype")
 public class InfoCommand extends AbsCommand {
 
-	Label label;
+	private final Label label;
 
 	public InfoCommand(String labelText) throws Exception {
 		if (labelText != null) {
@@ -26,8 +26,7 @@ public class InfoCommand extends AbsCommand {
 
 	@Override
 	public Response<?> execute() {
-		StringResponse response = new StringResponse(InfoTexts.infoTexts.get(label));
-		return response;
+		return new StringResponse(InfoTexts.infoTexts.get(label));
 	}
 
 }

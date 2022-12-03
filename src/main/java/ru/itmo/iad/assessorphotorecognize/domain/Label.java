@@ -36,16 +36,16 @@ public enum Label {
 		return this.databaseCode;
 	}
 
-	public static Label getByButtonCode(String buttonCode) throws Exception {
+	public static Label getByButtonCode(String buttonCode) {
 		return Arrays.stream(Label.values())
 				.filter(label -> label.getButtonCode().equals(buttonCode))
 				.findFirst()
 				.get(); 
 	}
 	
-	public static Label getByButtonText(String buttonText) throws Exception {
+	public static Label getByButtonText(String buttonText) {
 		return Arrays.stream(Label.values())
-				.filter(label -> label.getButtonCode().toLowerCase().equals(buttonText.toLowerCase()))
+				.filter(label -> label.getButtonCode().equalsIgnoreCase(buttonText))
 				.findFirst()
 				.get(); 
 	}

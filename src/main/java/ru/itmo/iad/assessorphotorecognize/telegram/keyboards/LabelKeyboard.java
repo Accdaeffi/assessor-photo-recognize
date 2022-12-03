@@ -22,7 +22,7 @@ public class LabelKeyboard {
 
 		List<Label> labels = Stream.of(Label.values())
 				.filter(l -> l.getLabelZeroLevel().equals(zeroLevelLabel))
-				.collect(Collectors.toList());
+				.toList();
 
 		for (Label label : labels) {
 			InlineKeyboardButton button = new InlineKeyboardButton();

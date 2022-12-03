@@ -1,26 +1,25 @@
 package ru.itmo.iad.assessorphotorecognize.service;
 
-import java.util.Optional;
-
+import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.telegram.telegrambots.meta.api.objects.User;
-
 import ru.itmo.iad.assessorphotorecognize.domain.dao.AssessorDao;
 import ru.itmo.iad.assessorphotorecognize.domain.repository.AsessorRepository;
 
+import java.util.Optional;
+
 @Service
+@RequiredArgsConstructor
 public class AsessorService {
-	
-	@Autowired
-	AsessorRepository repository;
+
+	private final AsessorRepository repository;
 	
 	public AssessorDao getOrCreateAsessor(User user) {
-		Optional<AssessorDao> optionalAsessor = repository.findByTelegramId(user.getId().toString());
+		Optional<AssessorDao> optionalAssessor = repository.findByTelegramId(user.getId().toString());
 		
-		if (optionalAsessor.isPresent()) {
-			return optionalAsessor.get();
+		if (optionalAssessor.isPresent()) {
+			return optionalAssessor.get();
 		} else {
 			AssessorDao asessor = AssessorDao.builder()
 					._id(ObjectId.get())
@@ -35,12 +34,12 @@ public class AsessorService {
 	}
 	
 	public void increaseHoneypotCounter(String telegramId) {
-		Optional<AssessorDao> optionalAsessor = repository.findByTelegramId(telegramId.toString());
-		AssessorDao asessor = optionalAsessor.get();
+		Optional<AssessorDao> optionalAssessor = repository.findByTelegramId(telegramId);
+		AssessorDao assessor = optionalAssessor.get();
+
+		assessor.setHoneypotCount(assessor.getHoneypotCount()+1);
 		
-		asessor.setHoneypotCount(asessor.getHoneypotCount()+1);
-		
-		repository.save(asessor);
+		repository.save(assessor);
 	}
 
 }

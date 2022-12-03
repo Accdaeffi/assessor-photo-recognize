@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.util.Date;
 
+import lombok.RequiredArgsConstructor;
 import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.gridfs.GridFsTemplate;
@@ -19,16 +20,14 @@ import ru.itmo.iad.assessorphotorecognize.domain.repository.TrainingImageReposit
 import ru.itmo.iad.assessorphotorecognize.telegram.Bot;
 
 @Service
+@RequiredArgsConstructor
 public class ImageSaver {
 
-	@Autowired
-	GridFsTemplate gridFsTemplate;
+	private final GridFsTemplate gridFsTemplate;
 
-	@Autowired
-	TrainingImageRepository trainingImageRepository;
-	
-	@Autowired
-	Bot bot;
+	private final TrainingImageRepository trainingImageRepository;
+
+	private final Bot bot;
 
 	public ObjectId saveTrainingImage(PhotoSize photo) {
 
@@ -63,9 +62,7 @@ public class ImageSaver {
 
 				return trainingImage.get_id();
 
-			} catch (TelegramApiException e) {
-				e.printStackTrace();
-			} catch (FileNotFoundException e) {
+			} catch (TelegramApiException | FileNotFoundException e) {
 				e.printStackTrace();
 			}
 
