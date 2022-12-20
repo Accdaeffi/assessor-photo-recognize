@@ -23,7 +23,7 @@ public class SkipImageCommand extends AbsCommand {
     private final User user;
     private final int messageId;
 
-    public SkipImageCommand(User user, int messageId) throws Exception {
+    public SkipImageCommand(User user, int messageId) {
         this.user = user;
         this.messageId = messageId;
     }

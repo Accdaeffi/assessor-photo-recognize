@@ -26,3 +26,6 @@ replay_pid*
 target
 logs
 .env*
+
+.idea
+*.iml

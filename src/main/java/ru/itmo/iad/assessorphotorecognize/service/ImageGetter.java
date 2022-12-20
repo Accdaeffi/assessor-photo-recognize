@@ -1,5 +1,19 @@
 package ru.itmo.iad.assessorphotorecognize.service;
 
+import com.mongodb.client.gridfs.model.GridFSFile;
+import lombok.RequiredArgsConstructor;
+import org.bson.types.ObjectId;
+import org.springframework.data.mongodb.core.query.Criteria;
+import org.springframework.data.mongodb.core.query.Query;
+import org.springframework.data.mongodb.gridfs.GridFsOperations;
+import org.springframework.data.mongodb.gridfs.GridFsTemplate;
+import org.springframework.stereotype.Service;
+import ru.itmo.iad.assessorphotorecognize.domain.Dataset;
+import ru.itmo.iad.assessorphotorecognize.domain.dao.TrainingImageDao;
+import ru.itmo.iad.assessorphotorecognize.domain.dto.ImageDto;
+import ru.itmo.iad.assessorphotorecognize.domain.repository.ImageAsessmentRepository;
+import ru.itmo.iad.assessorphotorecognize.domain.repository.TrainingImageRepository;
+
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -7,36 +21,18 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Random;
 
-import org.bson.types.ObjectId;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.mongodb.core.query.Criteria;
-import org.springframework.data.mongodb.core.query.Query;
-import org.springframework.data.mongodb.gridfs.GridFsOperations;
-import org.springframework.data.mongodb.gridfs.GridFsTemplate;
-import org.springframework.stereotype.Service;
-
-import com.mongodb.client.gridfs.model.GridFSFile;
-
-import ru.itmo.iad.assessorphotorecognize.domain.Dataset;
-import ru.itmo.iad.assessorphotorecognize.domain.dao.TrainingImageDao;
-import ru.itmo.iad.assessorphotorecognize.domain.dto.ImageDto;
-import ru.itmo.iad.assessorphotorecognize.domain.repository.ImageAsessmentRepository;
-import ru.itmo.iad.assessorphotorecognize.domain.repository.TrainingImageRepository;
-
 @Service
+
+@RequiredArgsConstructor
 public class ImageGetter {
 
-	@Autowired
-	private TrainingImageRepository trainingImageRepository;
+	private final TrainingImageRepository trainingImageRepository;
 
-	@Autowired
-	private ImageAsessmentRepository imageAsessmentRepository;
+	private final ImageAsessmentRepository imageAsessmentRepository;
 
-	@Autowired
-	private GridFsTemplate gridFsTemplate;
+	private final GridFsTemplate gridFsTemplate;
 
-	@Autowired
-	private GridFsOperations operations;
+	private final GridFsOperations operations;
 
 	private final double LEAST_PICKED_PROCENT = 0.35;
 	
@@ -58,12 +54,12 @@ public class ImageGetter {
 	}
 
 	private ImageDto getLeastPicked() throws IllegalStateException, IOException {
-		Map<ObjectId, Integer> imagesAsessmentCount = new HashMap<ObjectId, Integer>();
+		Map<ObjectId, Integer> imagesAsessmentCount = new HashMap<>();
 
 		trainingImageRepository.findByDataset(Dataset.test)
 		.forEach(image -> imagesAsessmentCount.put(image.get_id(), 0));
 
-		imageAsessmentRepository.findAll().stream().forEach(asessment -> {
+		imageAsessmentRepository.findAll().forEach(asessment -> {
 			if (imagesAsessmentCount.containsKey(asessment.getImageId())) {
 				imagesAsessmentCount.put(asessment.getImageId(), imagesAsessmentCount.get(asessment.getImageId()) + 1);
 			}
@@ -116,8 +112,8 @@ public class ImageGetter {
 	private ImageDto convertDaoToDto(TrainingImageDao dao) throws IllegalStateException, IOException {
 		GridFSFile file = gridFsTemplate.findOne(new Query(Criteria.where("_id").is(dao.getFileId())));
 
-		return new ImageDto(dao.get_id().toHexString(), 
-				dao.getDataset() == Dataset.train ? true : false, 
+		return new ImageDto(dao.get_id().toHexString(),
+				dao.getDataset() == Dataset.train,
 				operations.getResource(file).getInputStream());
 	}
 

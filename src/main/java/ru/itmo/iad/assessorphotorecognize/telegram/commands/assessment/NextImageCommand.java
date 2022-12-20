@@ -22,13 +22,13 @@ import ru.itmo.iad.assessorphotorecognize.telegram.response.StringResponse;
 public class NextImageCommand extends AbsCommand {
 
 	@Autowired
-	ImageGetter imageGetter;
+	private ImageGetter imageGetter;
 
 	@Autowired
-	AsessorService asessorService;
+	private AsessorService asessorService;
 
 	@Autowired
-	ZeroLevelLabelKeyboard zeroLevelLabelKeyboard;
+	private ZeroLevelLabelKeyboard zeroLevelLabelKeyboard;
 	
 	private final User user;
 	
