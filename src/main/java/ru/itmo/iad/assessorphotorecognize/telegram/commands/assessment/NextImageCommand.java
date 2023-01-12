@@ -10,6 +10,7 @@ import ru.itmo.iad.assessorphotorecognize.domain.dao.AssessorDao;
 import ru.itmo.iad.assessorphotorecognize.domain.dto.ImageDto;
 import ru.itmo.iad.assessorphotorecognize.service.AsessorService;
 import ru.itmo.iad.assessorphotorecognize.service.ImageGetter;
+import ru.itmo.iad.assessorphotorecognize.service.MonitoringService;
 import ru.itmo.iad.assessorphotorecognize.telegram.commands.AbsCommand;
 import ru.itmo.iad.assessorphotorecognize.telegram.keyboards.ZeroLevelLabelKeyboard;
 import ru.itmo.iad.assessorphotorecognize.telegram.response.PhotoResponse;
@@ -21,33 +22,38 @@ import ru.itmo.iad.assessorphotorecognize.telegram.response.StringResponse;
 @Slf4j
 public class NextImageCommand extends AbsCommand {
 
-	@Autowired
-	private ImageGetter imageGetter;
+    @Autowired
+    private ImageGetter imageGetter;
 
-	@Autowired
-	private AsessorService asessorService;
+    @Autowired
+    private AsessorService asessorService;
 
-	@Autowired
-	private ZeroLevelLabelKeyboard zeroLevelLabelKeyboard;
-	
-	private final User user;
-	
-	public NextImageCommand(User user) {
-		this.user = user;
-	}
+    @Autowired
+    private ZeroLevelLabelKeyboard zeroLevelLabelKeyboard;
 
-	@Override
-	public Response<?> execute() {
-		try {
-			AssessorDao asessor = asessorService.getOrCreateAsessor(user);
-			ImageDto image = imageGetter.getImage(asessor.getHoneypotCount());
+    @Autowired
+    MonitoringService monitoringService;
 
-			return new PhotoResponse(image.getData(), image.getPhotoId(), null,
-					zeroLevelLabelKeyboard.getKeyboard(image.getPhotoId(), image.isHoneypot()));
-		} catch (Exception e) {
-			log.error("Ошибка!", e);
-			return new StringResponse("Ошибка получения фото!");
-		}
-	}
+    private final User user;
+
+    public NextImageCommand(User user) {
+        this.user = user;
+    }
+
+    @Override
+    public Response<?> execute() {
+        try {
+            monitoringService.incrementNextCounter();
+            AssessorDao asessor = asessorService.getOrCreateAsessor(user);
+            ImageDto image = imageGetter.getImage(asessor.getHoneypotCount());
+
+            return new PhotoResponse(image.getData(), image.getPhotoId(), null,
+                    zeroLevelLabelKeyboard.getKeyboard(image.getPhotoId(), image.isHoneypot()));
+        } catch (Exception e) {
+            log.error("Ошибка!", e);
+            monitoringService.incrementNextErrorCounter();
+            return new StringResponse("Ошибка получения фото!");
+        }
+    }
 
 }
