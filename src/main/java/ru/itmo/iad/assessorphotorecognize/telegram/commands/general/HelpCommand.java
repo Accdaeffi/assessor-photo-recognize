@@ -16,12 +16,12 @@ import ru.itmo.iad.assessorphotorecognize.telegram.response.StringResponse;
 @Slf4j
 public class HelpCommand extends AbsCommand {
     @Autowired
-    MonitoringService monitoringService;
+    private MonitoringService monitoringService;
 
     @Override
     public StringResponse execute() {
-        monitoringService.incrementHelpCounter();
         try {
+            monitoringService.incrementHelpCounter();
             String builder = "Описание классов с примерами:" +
                     System.lineSeparator() +
                     System.lineSeparator() +

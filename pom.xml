@@ -101,6 +101,7 @@
                                 <exclude>/**/AssessorPhotorecognizeApplication*</exclude>
                                 <exclude>/**/service/ImageSaver*</exclude>
                                 <exclude>/**/service/ImageGetter*</exclude>
+                                <exclude>/**/service/MonitoringService*</exclude>
                                 <exclude>/**/conf/**</exclude>
                                 <exclude>/**/domain/**</exclude>
                                 <exclude>/**/texts/**</exclude>
@@ -134,6 +135,7 @@
                                 <exclude>/**/AssessorPhotorecognizeApplication*</exclude>
                                 <exclude>/**/service/ImageSaver*</exclude>
                                 <exclude>/**/service/ImageGetter*</exclude>
+                                <exclude>/**/service/MonitoringService*</exclude>
                                 <exclude>/**/conf/**</exclude>
                                 <exclude>/**/domain/**</exclude>
                                 <exclude>/**/texts/**</exclude>

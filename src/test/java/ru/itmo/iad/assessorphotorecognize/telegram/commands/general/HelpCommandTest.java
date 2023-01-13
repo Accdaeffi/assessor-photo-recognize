@@ -9,11 +9,13 @@ import org.mockito.MockitoAnnotations;
 import ru.itmo.iad.assessorphotorecognize.service.MonitoringService;
 
 import static com.mongodb.assertions.Assertions.assertFalse;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.verify;
 
 class HelpCommandTest {
 
     @Mock
-    MonitoringService monitoringService;
+    private MonitoringService monitoringService;
     @InjectMocks
     private HelpCommand helpCommand;
 
@@ -26,6 +28,13 @@ class HelpCommandTest {
     @Test
     void testResponse() {
         assertFalse(helpCommand.execute().getContent().isEmpty());
+    }
+
+    @Test
+    void testException() {
+        doThrow(RuntimeException.class).when(monitoringService).incrementHelpCounter();
+        helpCommand.execute();
+        verify(monitoringService).incrementHelpErrorCounter();
     }
 
 }
